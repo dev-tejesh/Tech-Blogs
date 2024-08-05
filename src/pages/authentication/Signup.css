@@ -1,0 +1,52 @@
+/* Signup.css */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.signupcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #263238;
+}
+
+.inside {
+    background-color: #37474f;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.center {
+    text-align: center;
+}
+
+.primary {
+    color: #eceff1;
+}
+
+input[type=text], input[type=email], input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #90a4ae;
+    border-radius: 14px;
+    box-sizing: border-box;
+    outline: none;
+    background-color: #455a64;
+    color: #eceff1;
+}
+
+.top {
+    padding-top: 10px;
+}
+
+span.primary {
+    color: #5cb85c;
+    cursor: pointer;
+}
