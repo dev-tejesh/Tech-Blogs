@@ -1,18 +1,17 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Newcard from "../../components/Newcard";
 import "./Home.css";
-import Post from "../../components/post";
-// import { Link } from 'react-router-dom';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/Navbar";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const Home = () => {
-    const [posts, setPosts] = useState([]); // State to hold the fetched posts
-    const { user } = useAuthContext()
-    // useEffect hook
+    const [posts, setPosts] = useState([]);
+    const { user } = useAuthContext();
+
     useEffect(() => {
-        // Function to fetch data
         const fetchData = async () => {
             try {
                 const response = await axios.get("http://localhost:4000/blog/all", {
@@ -20,32 +19,27 @@ const Home = () => {
                         Authorization: `Bearer ${user.token}`
                     }
                 });
-                setPosts(response.data); // Set the state with the fetched posts
-                console.log(response.data);
+                setPosts(response.data);
             } catch (error) {
-                console.error("Error fetching data:", error); // Log any error that occurs
+                console.error("Error fetching data:", error);
             }
         };
 
-        fetchData(); // Call the fetch function when the component mounts
-    }, [user]); // Empty dependency array means this effect runs once when the component mounts
+        fetchData();
+    }, [user.token]);
 
     return (
-        <div className="wrap">
-            <Navbar></Navbar>    
-            <div>
-                {/* <div className="white bold">Latest Posts</div> */}
-                <div className="sizedcontainer"></div>
-                <div className="sizedcontainer"></div>
-                <div className="items">
-                    {posts.map(post => (
-                        <Post key={post._id} post={post} showDeleteButton={false}/>
-                    ))}
-                    <div className="sizedcontainer"></div>
-                </div>
+        <div>
+            <Navbar />
+            <div className="card-list">
+                {posts.map(post => (
+                    <Newcard key={post._id} post={post} showDeleteButton={false} />
+                ))}
             </div>
+            <ToastContainer />
         </div>
     );
 };
 
 export default Home;
+

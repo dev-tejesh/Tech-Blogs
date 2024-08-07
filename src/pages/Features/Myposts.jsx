@@ -1,12 +1,11 @@
 import { useEffect} from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import axios from "axios";
-import Post from "../../components/post";
 import { usePostsContext } from "../../hooks/usePostsContext";
 import Navbar from "../../components/Navbar";
+import Newcard from "../../components/Newcard";
 
 const Myposts = () => {
-    // const [myposts, setPosts] = useState([]);
     const { user } = useAuthContext()
     const {posts, dispatch} = usePostsContext()
 
@@ -18,7 +17,6 @@ const Myposts = () => {
                         Authorization: `Bearer ${user.token}`
                     }
                 });
-                // setPosts(response.data);
                 dispatch({type: 'SET_POSTS', payload: response.data})
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -28,28 +26,13 @@ const Myposts = () => {
         if (user) fetchData();
     }, [dispatch, user, posts]);
 
-    // const handleDeletePost = (deletedPostId) => {
-    //     setPosts(myposts.filter(post => post._id !== deletedPostId));
-    // };
-
     return (
         <div>
         <Navbar></Navbar> 
-        <div className="wrap">
-            <div>
-                <div className="sizedcontainer"></div>
-                <div className="items">
-                    {posts && posts.map(post => (
-                        <Post
-                            key={post._id}
-                            post={post}
-                            showDeleteButton={true}
-                        />
-                    ))}
-                    <div className="sizedcontainer"></div>
-                </div>
-            </div>
-        </div>
+        <div className="card-list">
+            {posts && posts.map(post => (
+                        <Newcard key={post._id} post={post} showDeleteButton={true}/>
+                    ))}</div>
         </div>
     );
 };

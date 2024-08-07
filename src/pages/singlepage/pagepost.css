@@ -1,60 +1,132 @@
+/* pagepost.css */
 html, body {
-    /* height: 100%; */
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
-.sizedbox{
-    height: 10px;
-}
-
-.wrap{
-    height: auto;
+.wrap {
     background-color: #263238;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.white{
-    color: white;
-}
-
-.tag{
-    /* height: 10px; */
-    padding: 5px;
-    width: 100px;
-    text-align: center;
-    background-color: blue;
-    font-weight: bold;
-    /* width: auto; */
-}
-
-.pad10{
-    padding: 10px;
-}
-
-.title{
-    font-size: larger;
-    font-weight: bolder;
-}
-
-.flex{
-    /* height: 400px; */
+.flex {
     display: flex;
     flex-direction: column;
-   align-items: center;
-}
-
-.setimg{
+    align-items: center;
     width: 100%;
-    height: 200px;
+    max-width: 800px;
+    background-color: #37474F;
     border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.insideflex{
-    width: 40%;
+.flex:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.style{
-    font-size: 15px;
+.insideflex {
+    width: 100%;
+}
+
+.tag {
+    padding: 5px 10px;
+    text-align: center;
+    background-color: #1E88E5;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 0 auto 10px auto;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: bolder;
+    text-align: center;
+    margin: 10px 0;
+    color: #FFF;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFF;
+}
+
+.profile-name, .post-date {
+    color: #B0BEC5;
+}
+
+.setimg {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.description {
+    font-size: 1em;
     text-align: justify;
-    padding-bottom: 40px;
+    color: #ECEFF1;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .flex {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 1.5em;
+    }
+
+    .profile-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .description {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .flex {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 1.2em;
+    }
+
+    .profile-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .description {
+        font-size: 0.85em;
+    }
 }

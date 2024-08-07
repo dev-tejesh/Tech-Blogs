@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
-import axios from 'axios'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const useSignup = () => {
   const [error, setError] = useState(null)
@@ -10,42 +12,58 @@ export const useSignup = () => {
   const signup = async (email, password) => {
     setIsLoading(true)
     setError(null)
+    const authentication = getAuth()
 
     try {
-      const client = axios.create({
-        baseURL: "http://localhost:4000/"
-      });
+      const response = await createUserWithEmailAndPassword(authentication, email, password)
+      
+      // Extract the token and email from the response
+      const token = await response.user.getIdToken()
+      console.log(token)
+      const userEmail = response.user.email
 
-      const response = await client.post('auth/signup', {
-        email,
-        password,
-      });
+      // Save the user to local storage in JSON format
+      const user = { token, email: userEmail }
+      localStorage.setItem('user', JSON.stringify(user))
 
-      const json = response.data
-
-      // save the user to local storage
-      localStorage.setItem('user', JSON.stringify(json))
-
-      // update the auth context
-      dispatch({ type: 'LOGIN', payload: json })
-
-      // update loading state
+      // Update the auth context
+      dispatch({ type: 'LOGIN', payload: user })
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
-      if (error.response) {
+      let errorMessage = 'An error occurred'
+
+      if (error.code) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            errorMessage = 'This email is already in use.'
+            break
+          case 'auth/invalid-email':
+            errorMessage = 'Invalid email address.'
+            break
+          case 'auth/operation-not-allowed':
+            errorMessage = 'Operation not allowed.'
+            break
+          case 'auth/weak-password':
+            errorMessage = 'Password is too weak.'
+            break
+          default:
+            errorMessage = error.message
+        }
+      } else if (error.response) {
         // Server responded with a status other than 2xx
-        setError(error.response.data.error)
-        console.log(error.response.data.error)
+        errorMessage = error.response.data.error || errorMessage
       } else if (error.request) {
         // Request was made but no response was received
-        setError('No response from server')
-        console.log('No response from server')
+        errorMessage = 'No response from server'
       } else {
         // Something happened in setting up the request
-        setError(error.message)
-        console.log(error.message)
+        errorMessage = error.message
       }
+
+      setError(errorMessage)
+      toast.error(errorMessage)
+      console.log(errorMessage)
     }
   }
 

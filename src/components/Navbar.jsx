@@ -1,6 +1,6 @@
 // import React from 'react';
 import { FaBars } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -8,8 +8,10 @@ import { useAuthContext } from '../hooks/useAuthContext';
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
   const handleClick = () => {
     logout();
+    navigate('/login')
   };
 
   return (
@@ -36,11 +38,11 @@ const Navbar = () => {
               My Blogs
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/profile" activeClassName="active">
               Profile
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <button onClick={handleClick}>Log out</button>
           </li>

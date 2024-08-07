@@ -60,56 +60,32 @@ span.primary {
     cursor: pointer;
 }
 
-
-
-/* Login.css
-html, body {
-  
-    margin: 0;
-    padding: 0;
-}
-
-.logincontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #01579B
-}
-
-.inside {
-    background-color: white;
-    border-radius:18px;
-    display: flex;
-    flex-direction: column;
-    padding: 0px 40px 20px 40px;
-}
-
-.center{
-    text-align: center;
-    
-}
-
-.primary{
-    color: #01579B;
-}
-
-input[type=text], select {
+/* Button.css */
+.button {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 14px;
-    box-sizing: border-box;
-    outline: none;
-  }
+    height: 40px;
+    background-color: #01579B;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
 
-  .down{
-    padding-bottom: 10px;
-  }
-  
-  .top{
-    padding-top: 10px;
-  }
-   */
+.button:disabled {
+    background-color: #0288D1;
+    cursor: not-allowed;
+}
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+

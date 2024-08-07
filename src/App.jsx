@@ -12,6 +12,9 @@ import {
   Route,
 } from "react-router-dom";
 import Myposts from "./pages/Features/Myposts";
+import ForgotPassword from "./pages/authentication/ForgotPassword ";
+// import { ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -32,6 +35,10 @@ function App() {
               path="/signup" 
               element={!user ? <Signup /> : <Navigate to="/" />} 
             />
+            <Route 
+              path="/reset" 
+              element={!user ? <ForgotPassword></ForgotPassword> : <Navigate to="/reset" />} 
+            />
             <Route path="/create" element={<CreatePost/>}></Route>
             <Route path="/post" element= {<Singlepost/>}></Route>
             <Route path="/myblogs" element = {<Myposts/>}></Route>
@@ -42,6 +49,7 @@ function App() {
           <Route path="/signup" element={<Signup />} /> */}
         </Routes>
       </Router>
+      {/* <ToastContainer /> */}
     </div>
   );
 }
