@@ -8,6 +8,77 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.dropbtn {
+    background-color: #f9f9f9;
+    color: black;
+    padding: 16px; 
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+    margin-top: 30px;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .cursor{
+    cursor: pointer;
+    
+  }
+
+
+/* .dropdown-content a:hover {background-color: #f1f1f1; } */
+/* Add styles for the active dropdown item */
+ a.active {
+    background-color: #1b9bff; /* Highlight color for the active item */
+    color: white; /* Change text color for the active item */
+}
+.active:hover{
+    background-color: #1b9bff; /* Highlight color for the active item */
+    color: white;
+}
+
+a:hover{
+    background-color: #A8A8A8;
+    cursor: pointer;
+}
+
+
+/* Optional: Add a smooth transition effect */
+/* .dropdown-content a {
+    transition: background-color 0.3s, color 0.3s;
+} */
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #1b9bff;
+  color: white;
+}
+
+
 .card-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -55,6 +126,7 @@
     background-color: #F7DFF5; 
     color: #B22485;
 }   
+
 
 .card-list .designer {
     background-color: #d1e8ff;
@@ -113,12 +185,13 @@
 
 @media (max-width: 1200px) {
     .card-list .card-item {
-        padding: 15px;
+        padding: 20px;
     }
+    
 }
 
 @media screen and (max-width: 980px) {
     .card-list {
-        margin: 0 auto;
+        margin: 5 auto;
     }
 }
