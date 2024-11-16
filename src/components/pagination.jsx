@@ -29,6 +29,10 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
     }
   };
 
+  // if (totalPosts === 0) {
+  //   return null; // Don't render the pagination if no posts are available
+  // }
+
   return (
     <div className="pagination-container">
       <ul className="pagination">

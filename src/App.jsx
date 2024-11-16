@@ -13,35 +13,42 @@ import {
 } from "react-router-dom";
 import Myposts from "./pages/Features/Myposts";
 import ForgotPassword from "./pages/authentication/ForgotPassword ";
-// import { ToastContainer } from "react-toastify";
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
   const { user } = useAuthContext()
   return (
-    <div className="App"> 
+    <div className="App">
+      <ToastContainer />
       <Router>
         <Routes>
-            <Route 
-              path="/" 
-              element={user ? <Home /> : <Navigate to="/login" />} 
-            />
-            <Route 
-              path="/login" 
-              element={!user ? <Login /> : <Navigate to="/"/>} 
-            />
-            <Route 
-              path="/signup" 
-              element={!user ? <Signup /> : <Navigate to="/" />} 
-            />
-            <Route 
-              path="/reset" 
-              element={!user ? <ForgotPassword></ForgotPassword> : <Navigate to="/reset" />} 
-            />
-            <Route path="/create" element={<CreatePost/>}></Route>
-            <Route path="/post" element= {<Singlepost/>}></Route>
-            <Route path="/myblogs" element = {<Myposts/>}></Route>
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/reset"
+            element={
+              !user ? (
+                <ForgotPassword></ForgotPassword>
+              ) : (
+                <Navigate to="/reset" />
+              )
+            }
+          />
+          <Route path="/create" element={<CreatePost />}></Route>
+          <Route path="/post" element={<Singlepost />}></Route>
+          <Route path="/myblogs" element={<Myposts />}></Route>
           {/* <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home/>}/>
           <Route path="/post" element= {<Singlepost/>}></Route>

@@ -8,7 +8,7 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.dropbtn {
+/* .dropbtn {
     background-color: #f9f9f9;
     color: black;
     padding: 16px; 
@@ -39,7 +39,76 @@
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-  }
+  } */
+
+  .sort-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 20px;
+}
+
+.sort-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: right;
+}
+
+.dropbtn {
+  background-color: #1b9bff;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+}
+
+.dropbtn:hover {
+  background-color: #1578e6;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown-content a.active {
+  background-color: #1b9bff;
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
   .cursor{
     cursor: pointer;
     
@@ -69,21 +138,21 @@ a:hover{
 } */
 
 
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
   display: block;
 }
 
 .dropdown:hover .dropbtn {
   background-color: #1b9bff;
   color: white;
-}
+} */
 
 
 .card-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     max-width: 1250px;
-    margin: 150px auto;
+    margin: 0px auto;
     padding: 20px;
     gap: 20px;
 }
@@ -194,4 +263,16 @@ a:hover{
     .card-list {
         margin: 5 auto;
     }
+}
+
+.card-list p {
+    text-align: center;
+    font-size: 1.2rem; /* Adjust as needed */
+    color: white; /* Optional: softer text color */
+    margin-top: 20px; /* Adjust spacing as desired */
+}
+
+.white{
+    color: white;
+    margin-bottom: 4px;
 }

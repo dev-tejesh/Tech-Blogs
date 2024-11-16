@@ -2,12 +2,20 @@ import axios from "axios";
 import { useState } from "react";
 import "./createpost.css";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { TailSpin } from 'react-loader-spinner';
-// import { toast } from "react-toastify";
+import { initializeApp } from "firebase/app";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { TailSpin } from "react-loader-spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRef } from "react";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0xM0Mg-5v8j4t30ge91_3B0idPpXPzko",
@@ -16,7 +24,7 @@ const firebaseConfig = {
   storageBucket: "blogs-f7323.appspot.com",
   messagingSenderId: "758440892295",
   appId: "1:758440892295:web:c9287b8298a28df4b36522",
-  measurementId: "G-3MY96S310V"
+  measurementId: "G-3MY96S310V",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -24,25 +32,46 @@ const storage = getStorage(app);
 
 const CreatePost = () => {
   const client = axios.create({
-    baseURL: "http://localhost:4000/"
+    baseURL: "http://localhost:4000/",
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("tech");
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
   // const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
-  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
+  // const navigate = useNavigate();
+
+  // const handleFileChange = (e) => {
+  //   if (e.target.files[0]) {
+  //     setImage(e.target.files[0]);
+  //     setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
+  //   }
+  // };
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-      setValidationErrors((prevErrors) => ({ ...prevErrors, image: '' }));
+      const selectedFile = e.target.files[0];
+      const maxFileSize = 10 * 1024 * 1024; // 10MB in bytes
+
+      if (selectedFile.size > maxFileSize) {
+        setValidationErrors((prevErrors) => ({
+          ...prevErrors,
+          image: "File size must be less than 10MB",
+        }));
+        setImage(null); // Reset the image if it's invalid
+        return;
+      }
+
+      setImage(selectedFile);
+      setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
     }
   };
+
 
   const validateInputs = () => {
     let errors = {};
@@ -94,34 +123,41 @@ const CreatePost = () => {
 
   const addPosts = async (title, content, tags, imageURL) => {
     try {
-      const response = await client.post('blog/create', {
-        title: title,
-        description: content,
-        tag: tags,
-        image: imageURL
-      }, {
-        headers: {
-          Authorization: `Bearer ${user.token}`
+      const response = await client.post(
+        "blog/create",
+        {
+          title: title,
+          description: content,
+          tag: tags,
+          image: imageURL,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
       console.log(response.data);
-      navigate('/');
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
       setSuccess("Post created successfully!");
-      console.log(success)
-      // toast.success(success, {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
+      console.log(success);
+       toast.success("Post created successfully!", {
+         position: "top-right",
+       });
     } catch (error) {
-      // setError(error.message);
-      // toast.error(error.message, {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
+      setIsLoading(false);
+      toast.error("Something went wrong, Please try again!", {
+        position: "top-right",
+      });
       console.log(error);
     }
 
-    setTitle('');
-    setContent('');
-    setCategory('tech');
+    setTitle("");
+    setContent("");
+    setCategory("");
+    setImage(null);
     setIsLoading(false);
   };
 
@@ -144,14 +180,14 @@ const CreatePost = () => {
   const handleInputChange = (setter, name) => (e) => {
     setter(e.target.value);
     setValidationErrors((prevErrors) => {
-      const newErrors = { ...prevErrors, [name]: '' };
-      if (name === 'title' && e.target.value.length < 15) {
+      const newErrors = { ...prevErrors, [name]: "" };
+      if (name === "title" && e.target.value.length < 15) {
         newErrors.title = "Title must be at least 15 characters";
       }
-      if (name === 'title' && e.target.value.length > 80) {
+      if (name === "title" && e.target.value.length > 80) {
         newErrors.title = "Title must be less than 80 characters";
       }
-      if (name === 'content' && e.target.value.length < 300) {
+      if (name === "content" && e.target.value.length < 300) {
         newErrors.content = "Content must be at least 300 characters";
       }
       return newErrors;
@@ -171,9 +207,11 @@ const CreatePost = () => {
               id="title"
               name="title"
               value={title}
-              onChange={handleInputChange(setTitle, 'title')}
+              onChange={handleInputChange(setTitle, "title")}
             />
-            {validationErrors.title && <span className="error-text">{validationErrors.title}</span>}
+            {validationErrors.title && (
+              <span className="error-text">{validationErrors.title}</span>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="content">Content</label>
@@ -181,25 +219,41 @@ const CreatePost = () => {
               id="content"
               name="content"
               value={content}
-              onChange={handleInputChange(setContent, 'content')}
+              onChange={handleInputChange(setContent, "content")}
             ></textarea>
-            {validationErrors.content && <span className="error-text">{validationErrors.content}</span>}
+            {validationErrors.content && (
+              <span className="error-text">{validationErrors.content}</span>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="categories">Categories</label>
-            <select
+            {/* <select
               id="categories"
               name="category"
               value={category}
-              onChange={handleInputChange(setCategory, 'category')}
+              onChange={handleInputChange(setCategory, "category")}
             >
               <option value="tech">Tech</option>
               <option value="entertainment">Entertainment</option>
               <option value="news">News</option>
+            </select> */}
+            <select
+              id="categories"
+              name="category"
+              value={category}
+              onChange={handleInputChange(setCategory, "category")}
+            >
+              <option value="">Select Category</option>
+              <option value="tech">Tech</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="news">News</option>
             </select>
-            {validationErrors.category && <span className="error-text">{validationErrors.category}</span>}
+
+            {validationErrors.category && (
+              <span className="error-text">{validationErrors.category}</span>
+            )}
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="featured-image">Featured Image</label>
             <input
               type="file"
@@ -207,10 +261,29 @@ const CreatePost = () => {
               name="image"
               onChange={handleFileChange}
             />
-            {validationErrors.image && <span className="error-text">{validationErrors.image}</span>}
+            {validationErrors.image && (
+              <span className="error-text">{validationErrors.image}</span>
+            )}
+          </div> */}
+          <div className="form-group">
+            <label htmlFor="featured-image">Featured Image</label>
+            <input
+              type="file"
+              id="featured-image"
+              name="image"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+            {validationErrors.image && (
+              <span className="error-text">{validationErrors.image}</span>
+            )}
           </div>
           <div className="form-group buttons">
-            <button type="submit" disabled={isLoading} className="submit-button">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="submit-button"
+            >
               {isLoading ? (
                 <TailSpin
                   height="20"
@@ -220,7 +293,7 @@ const CreatePost = () => {
                   className="spinner"
                 />
               ) : (
-                'Publish'
+                "Publish"
               )}
             </button>
           </div>
