@@ -13,8 +13,8 @@ const Myposts = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          // "http://localhost:4000/blog/yourblogs",
-          "https://blogs-backend-neon.vercel.app/blog/yourblogs",
+          "http://localhost:4000/blog/yourblogs",
+          // "https://blogs-backend-neon.vercel.app/blog/yourblogs",
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

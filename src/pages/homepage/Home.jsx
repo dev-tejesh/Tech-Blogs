@@ -154,9 +154,10 @@ const Home = () => {
       setLoading(true);
       setError(null); // Reset error state
       try {
+        console.log(user.token)
         const response = await axios.get(
-          // "http://localhost:4000/blog/all",
-          "https://blogs-backend-neon.vercel.app/blog/all",
+          "http://localhost:4000/blog/all",
+          // "https://blogs-backend-neon.vercel.app/blog/all",
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }
