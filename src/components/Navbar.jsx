@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <label htmlFor="check" className="logo">TechBlogs</label>
+      <label htmlFor="check" className="logo">Blogs App</label>
       <input type="checkbox" id="check" />
       <label htmlFor="check" className="checkbtn">
         <FaBars />
