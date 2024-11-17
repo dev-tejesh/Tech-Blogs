@@ -31,7 +31,7 @@ jobs:
       - name: Deploy to EC2
         env:
           TEST_KEY: ${{ secrets.TEST_KEY }}
-          HOST: 13.234.231.217 # Replace with your EC2 instance's public IP
+          HOST: 13.235.100.187 # Replace with your EC2 instance's public IP
           USER: ubuntu # Replace with the EC2 instance username if different
         run: |
           # Write the SSH private key to a file
