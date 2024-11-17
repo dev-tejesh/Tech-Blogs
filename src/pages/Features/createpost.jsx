@@ -32,7 +32,7 @@ const storage = getStorage(app);
 
 const CreatePost = () => {
   const client = axios.create({
-    baseURL: "http://localhost:4000/",
+    baseURL: "http://13.234.231.217/api/",
     // baseURL: "https://blogs-backend-neon.vercel.app/",
   });
   const [title, setTitle] = useState("");

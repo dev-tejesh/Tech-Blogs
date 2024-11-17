@@ -17,7 +17,7 @@ const Newcard = ({ post, showDeleteButton }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/blog/delete/${post._id}`,
+        `http://13.234.231.217/api/blog/delete/${post._id}`,
         // `https://blogs-backend-neon.vercel.app/blog/delete/${post._id}`,
 
         {
@@ -28,7 +28,7 @@ const Newcard = ({ post, showDeleteButton }) => {
       );
       try {
         const response = await axios.get(
-          "http://localhost:4000/blog/yourblogs",
+          "http://13.234.231.217/api/blog/yourblogs",
           // "https://blogs-backend-neon.vercel.app/blog/yourblogs",
           {
             headers: {

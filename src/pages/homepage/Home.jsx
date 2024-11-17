@@ -156,7 +156,7 @@ const Home = () => {
       try {
         console.log(user.token)
         const response = await axios.get(
-          "http://localhost:4000/blog/all",
+          "http://13.234.231.217/api/blog/all",
           // "https://blogs-backend-neon.vercel.app/blog/all",
           {
             headers: { Authorization: `Bearer ${user.token}` },
