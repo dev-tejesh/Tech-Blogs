@@ -16,6 +16,7 @@
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState(null);
 //   const { user } = useAuthContext();
+//   const [searchQuery, setSearchQuery] = useState("");
 
 //   useEffect(() => {
 //     const fetchData = async () => {
@@ -37,14 +38,31 @@
 //     fetchData();
 //   }, [user.token]);
 
-//   const filteredPosts = posts.filter((post) =>
-//     category === "all" ? true : post.tag === category
-//   );
+//   //   const filteredPosts = posts.filter((post) =>
+//   //     category === "all" ? true : post.tag === category
+//   //   );
 
-//   const handleCategoryChange = (category) => {
-//     setCategory(category);
+//   const filteredPosts = posts.filter((post) => {
+//     // Filter by category
+//     const isCategoryMatch = category === "all" ? true : post.tag === category;
+
+//     // Filter by search query, only if the search query is not empty
+//     const isSearchMatch =
+//       searchQuery === "" ||
+//       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//       post.content.toLowerCase().includes(searchQuery.toLowerCase());
+
+//     return isCategoryMatch && isSearchMatch;
+//   });
+
+//   const handleCategoryChange = (cat) => {
+//     setCategory(cat);
+//     setCurrentPage(1); // Reset to first page on category change
 //   };
-
+//   const handleSearchChange = (event) => {
+//     setSearchQuery(event.target.value); // Update search query
+//     setCurrentPage(1); // Reset to first page on search change
+//   };
 //   const indexOfLastPost = currentPage * postsPerPage;
 //   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 //   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -54,19 +72,34 @@
 //   return (
 //     <div>
 //       <Navbar />
-//       <div className="dropdown">
-//         <button className="dropbtn">Sort By</button>
-//         <div className="dropdown-content">
-//           {["tech", "news", "entertainment", "all"].map((cat) => (
-//             <a
-//               key={cat}
-//               onClick={() => handleCategoryChange(cat)}
-//               className={category === cat ? "active" : ""}
-//             >
-//               {cat.charAt(0).toUpperCase() + cat.slice(1)}
-//             </a>
-//           ))}
+//       <div className="sort-container">
+//         <p className="white">Sort By: </p>
+//         <div className="dropdown">
+//           <button className="dropbtn">
+//             {category.charAt(0).toUpperCase() + category.slice(1)}
+//           </button>
+//           <div className="dropdown-content">
+//             {["tech", "news", "entertainment", "all"].map((cat) => (
+//               <a
+//                 key={cat}
+//                 onClick={() => handleCategoryChange(cat)}
+//                 className={category === cat ? "active" : ""}
+//               >
+//                 {cat.charAt(0).toUpperCase() + cat.slice(1)}
+//               </a>
+//             ))}
+//           </div>
 //         </div>
+//       </div>
+//       {/* Search Input */}
+//       <div className="search-container">
+//         <input
+//           type="text"
+//           placeholder="Search posts..."
+//           value={searchQuery}
+//           onChange={handleSearchChange}
+//           className="search-input"
+//         />
 //       </div>
 //       {loading ? (
 //         <Loader />
@@ -113,6 +146,7 @@ const Home = () => {
   const [postsPerPage] = useState(6);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -120,9 +154,13 @@ const Home = () => {
       setLoading(true);
       setError(null); // Reset error state
       try {
-        const response = await axios.get("http://localhost:4000/blog/all", {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const response = await axios.get(
+          // "http://localhost:4000/blog/all",
+          "https://blogs-backend-neon.vercel.app/blog/all",
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
         setPosts(response.data);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -135,13 +173,26 @@ const Home = () => {
     fetchData();
   }, [user.token]);
 
-  const filteredPosts = posts.filter((post) =>
-    category === "all" ? true : post.tag === category
-  );
+  const filteredPosts = posts.filter((post) => {
+    // Filter by category
+    const isCategoryMatch = category === "all" ? true : post.tag === category;
+
+    // Filter by search query
+      const isSearchMatch =
+        searchQuery === "" ||
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+
+    return isCategoryMatch && isSearchMatch;
+  });
 
   const handleCategoryChange = (cat) => {
     setCategory(cat);
     setCurrentPage(1); // Reset to first page on category change
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value); // Update search query
+    setCurrentPage(1); // Reset to first page on search change
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -172,6 +223,18 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* Search Input */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search posts..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+      </div>
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -183,10 +246,11 @@ const Home = () => {
               <Newcard key={post._id} post={post} showDeleteButton={false} />
             ))
           ) : (
-            <p>No posts available in this category.</p>
+            <p>No posts available.</p>
           )}
         </div>
       )}
+
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={filteredPosts.length}
@@ -198,3 +262,4 @@ const Home = () => {
 };
 
 export default Home;
+

@@ -13,15 +13,13 @@ import {
 } from "react-router-dom";
 import Myposts from "./pages/Features/Myposts";
 import ForgotPassword from "./pages/authentication/ForgotPassword ";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
   const { user } = useAuthContext()
   return (
     <div className="App">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Router>
         <Routes>
           <Route

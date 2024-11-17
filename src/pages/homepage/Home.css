@@ -8,39 +8,6 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-/* .dropbtn {
-    background-color: #f9f9f9;
-    color: black;
-    padding: 16px; 
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    float: right;
-    margin-right: 20px;
-    margin-top: 30px;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  } */
-
   .sort-container {
   display: flex;
   flex-direction: column;
@@ -114,9 +81,6 @@
     
   }
 
-
-/* .dropdown-content a:hover {background-color: #f1f1f1; } */
-/* Add styles for the active dropdown item */
  a.active {
     background-color: #1b9bff; /* Highlight color for the active item */
     color: white; /* Change text color for the active item */
@@ -131,21 +95,6 @@ a:hover{
     cursor: pointer;
 }
 
-
-/* Optional: Add a smooth transition effect */
-/* .dropdown-content a {
-    transition: background-color 0.3s, color 0.3s;
-} */
-
-
-/* .dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #1b9bff;
-  color: white;
-} */
 
 
 .card-list {
@@ -275,4 +224,49 @@ a:hover{
 .white{
     color: white;
     margin-bottom: 4px;
+}
+
+
+.search-container {
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: center;
+  width: 80%; /* Default width for smaller screens */
+  padding: 10px 0; /* Adding padding for better spacing */
+}
+
+.search-input {
+  width: 80%; /* Default width for smaller screens */
+  padding: 12px; /* Adjust padding for better UX */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px; /* Margin for better spacing */
+  transition: all 0.3s ease;
+}
+
+/* For medium screens (e.g., tablets) */
+@media (min-width: 768px) {
+  .search-container {
+    width: 50%; /* Keep the width at 50% for medium to large devices */
+    padding: 15px 0; /* Adding padding for better spacing */
+  }
+
+  .search-input {
+    width: 100%; /* Adjust input width to be smaller for larger devices */
+    padding: 14px; /* Adjust padding for larger screens */
+  }
+}
+
+/* For larger screens (e.g., desktops) */
+@media (min-width: 1200px) {
+  .search-container {
+    width: 40%; /* Make it even smaller for very large screens */
+    padding: 20px 0; /* Adjust padding */
+  }
+
+  .search-input {
+    width: 100%; /* Input takes full width inside the container */
+    padding: 16px; /* Adjust padding for very large screens */
+  }
 }
