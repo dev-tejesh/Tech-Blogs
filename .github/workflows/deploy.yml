@@ -31,18 +31,18 @@ jobs:
       - name: Deploy to EC2
         env:
           TEST_KEY: ${{ secrets.TEST_KEY }}
-          HOST: 13.235.100.187 # Replace with your EC2 instance's public IP
+          HOST: 13.234.231.217 # Replace with your EC2 instance's public IP
           USER: ubuntu # Replace with the EC2 instance username if different
         run: |
           # Write the SSH private key to a file
           echo "$TEST_KEY" > key.pem
           chmod 600 key.pem
 
-          # # Ensure the directory exists and has the right permissions
-          # ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST "sudo mkdir -p /home/ubuntu/blogs && sudo chown -R $USER:$USER /home/ubuntu/blogs && sudo chmod -R u+rwx /home/ubuntu/blogs"
+          # Ensure the directory exists and has the right permissions
+          ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST "sudo mkdir -p /home/ubuntu/blogs && sudo chown -R $USER:$USER /home/ubuntu/blogs && sudo chmod -R u+rwx /home/ubuntu/blogs"
 
-          #   # Copy build files to EC2 instance
-          # scp -o StrictHostKeyChecking=no -i key.pem -r dist/* $USER@$HOST:/home/ubuntu/blogs
+          # Copy build files to EC2 instance
+          scp -o StrictHostKeyChecking=no -i key.pem -r dist/* $USER@$HOST:/home/ubuntu/blogs
 
-          # # Restart nginx to serve the new build
-          # ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST "sudo systemctl restart nginx"
+          # Restart nginx to serve the new build
+          ssh -o StrictHostKeyChecking=no -i key.pem $USER@$HOST "sudo systemctl restart nginx"
