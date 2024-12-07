@@ -13,7 +13,7 @@ const Myposts = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://13.234.231.217/api/blog/yourblogs",
+          "https://blogsbackend.tejesh.in/blog/yourblogs",
           // "https://blogs-backend-neon.vercel.app/blog/yourblogs",
           {
             headers: {

@@ -128,7 +128,6 @@
 
 // export default Home;
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Newcard from "../../components/Newcard";
@@ -154,9 +153,9 @@ const Home = () => {
       setLoading(true);
       setError(null); // Reset error state
       try {
-        console.log(user.token)
+        console.log(user.token);
         const response = await axios.get(
-          "http://13.234.231.217/api/blog/all",
+          "https://blogsbackend.tejesh.in/blog/all",
           // "https://blogs-backend-neon.vercel.app/blog/all",
           {
             headers: { Authorization: `Bearer ${user.token}` },
@@ -179,9 +178,9 @@ const Home = () => {
     const isCategoryMatch = category === "all" ? true : post.tag === category;
 
     // Filter by search query
-      const isSearchMatch =
-        searchQuery === "" ||
-        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+    const isSearchMatch =
+      searchQuery === "" ||
+      post.title.toLowerCase().includes(searchQuery.toLowerCase());
 
     return isCategoryMatch && isSearchMatch;
   });
@@ -263,4 +262,3 @@ const Home = () => {
 };
 
 export default Home;
-

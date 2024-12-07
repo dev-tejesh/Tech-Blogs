@@ -16,7 +16,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRef } from "react";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyD0xM0Mg-5v8j4t30ge91_3B0idPpXPzko",
   authDomain: "blogs-f7323.firebaseapp.com",
@@ -32,7 +31,7 @@ const storage = getStorage(app);
 
 const CreatePost = () => {
   const client = axios.create({
-    baseURL: "http://13.234.231.217/api/",
+    baseURL: "https://blogsbackend.tejesh.in/",
     // baseURL: "https://blogs-backend-neon.vercel.app/",
   });
   const [title, setTitle] = useState("");
@@ -72,7 +71,6 @@ const CreatePost = () => {
       setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
     }
   };
-
 
   const validateInputs = () => {
     let errors = {};
@@ -144,9 +142,9 @@ const CreatePost = () => {
       }
       setSuccess("Post created successfully!");
       console.log(success);
-       toast.success("Post created successfully!", {
-         position: "top-right",
-       });
+      toast.success("Post created successfully!", {
+        position: "top-right",
+      });
     } catch (error) {
       setIsLoading(false);
       toast.error("Something went wrong, Please try again!", {
